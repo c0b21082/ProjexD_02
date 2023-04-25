@@ -9,7 +9,7 @@ delta = {
         pg.K_UP:(0, -1),
         pg.K_DOWN:(0, 1),
         pg.K_LEFT:(-1, 0),
-        pg.K_RIGHT:(+1, 0),
+        pg.K_RIGHT:(1, 0),
         }
 
 
@@ -39,9 +39,16 @@ def main():
     kk_rct = kk_img.get_rect()
     kk_rct.center = (900, 400)
 
+    """
     bb_img = pg.Surface((20, 20))  # 爆弾描画領域の設定
     pg.draw.circle(bb_img, (255, 0, 0), (10, 10), 10)  # 赤丸爆弾の描画
-    bb_img.set_colorkey((0, 0, 0))  # 四隅の黒い余りを透過
+    """
+    bb_imgs = []
+    for r in range(1, 11):
+                bb_img = pg.Surface((20*r, 20*r))  # 10段階の描画領域
+                pg.draw.circle(bb_img, (255,0 ,0), (10*r, 10*r), 10*r)  # 10段階の大きさの爆弾
+                bb_imgs.append(bb_img)
+                bb_img.set_colorkey((0, 0, 0))  # 四隅の黒い余りを透過
     x, y = random.randint(0, 1600), random.randint(0, 900)
     screen.blit(bb_img, [x, y])  # ランダムな位置に爆弾を表示
     vx, vy = +1, +1  # 爆弾の移動速度
@@ -65,6 +72,7 @@ def main():
             for k, mv in delta.items():
                 if key_lst[k]:
                     kk_rct.move_ip(-mv[0], -mv[1])
+        bb_img = bb_imgs[min(tmr//1000, 9)]
         screen.blit(bg_img, [0, 0])
         screen.blit(kk_img, kk_rct)
         bb_rct.move_ip(vx, vy)
