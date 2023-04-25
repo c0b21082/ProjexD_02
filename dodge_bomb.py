@@ -72,7 +72,7 @@ def main():
             for k, mv in delta.items():
                 if key_lst[k]:
                     kk_rct.move_ip(-mv[0], -mv[1])
-        bb_img = bb_imgs[min(tmr//1000, 9)]
+        bb_img = bb_imgs[min(tmr//1000, 9)]  # 時間経過に応じた爆弾の画像をリストより選択する
         screen.blit(bg_img, [0, 0])
         screen.blit(kk_img, kk_rct)
         bb_rct.move_ip(vx, vy)
